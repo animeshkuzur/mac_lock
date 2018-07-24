@@ -1,5 +1,3 @@
-#include <string.h>
-
 char b64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void encodeblock( unsigned char in[], char b64str[], int len ) {

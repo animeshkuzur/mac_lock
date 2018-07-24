@@ -1,26 +1,41 @@
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <pwd.h>
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <ifaddrs.h>
 #include <netpacket/packet.h>
 #include "base64_encode.h"
+#include "freader.h"
 
-#define KEY "/tmp/HA_Bridge.key"
+char KEY_FILE_NAME[] = "/HA_Bridge.key";
 #define APP "sudo systemctl start <service>"
 
+void init();
 void convertToString(unsigned char *);
 void scrambler(unsigned char *);
+int check(char *);
 int execute();
-int encrypt();
 int getMacAddrs();
+
+char *gkey;
 
 int execute(){
     printf("Hello World!\n");
+    int status = system("");
 	return 0;
 }
 
-int encrypt(){
-	return 0;
+int check(char *key){
+    int flag=1;
+    int len=strlen(key);
+    for(int i=0;i<len;i++){
+        if(key[i]!=gkey[i])
+            flag=0;
+    }
+	return flag;
 }
 
 void scrambler(unsigned char *mac){
@@ -89,7 +104,6 @@ int getMacAddrs(){
     unsigned char mac[13];
     char key[1024] = "";
     bzero(mac,sizeof(char));
-
     if (getifaddrs(&ifaddr) == -1){
         printf("getifaddrs");
     }
@@ -117,12 +131,14 @@ int getMacAddrs(){
                     printf("%s\n",mac);
                     b64_encode(mac,key);
                     printf("%s\n",key);
-
-                }                
-                
-                /*unsigned char *mac_addr =*/ /*int a = convertToString(mac);*/
-                /*printf("%s",mac_addr);
-                printf("\n");*/
+                    if(check(key)){
+                        execute();
+                        break;
+                    }
+                    else{
+                        printf("Invalid Key");
+                    }
+                }
             }
         }
        	freeifaddrs(ifaddr);
@@ -130,11 +146,35 @@ int getMacAddrs(){
     return 0;
 }
 
-int main(){
-	getMacAddrs();
-    /*char mysrc[] = "My bonnie is over the          ";
-    char myb64[1024] = "";
+void createPath(char *path){
+    int len = strlen(path);int i;
+    for(i=0;i<strlen(KEY_FILE_NAME);i++){
+        path[i+len]=KEY_FILE_NAME[i];
+    }
+    path[i+len]='\0';
+}
 
-    b64_encode(mysrc, myb64);
-    printf("The string\n[%s]\nencodes into base64 as:\n[%s]\n", mysrc, myb64);*/
+void init(){
+    int i=0;char *path;
+    FILE *fp;
+    char *homedir = getenv("HOME");
+    if (homedir != NULL) {
+        path=homedir;
+    }
+    else{
+        uid_t uid = getuid();
+        struct passwd *pw = getpwuid(uid);
+        if (pw == NULL) {
+            printf("Failed\n");
+            exit(EXIT_FAILURE);
+        }
+        path=pw->pw_dir;
+    }
+    createPath(path);
+    gkey=read_file(path);
+}
+
+int main(){
+    init();
+	getMacAddrs();
 }
