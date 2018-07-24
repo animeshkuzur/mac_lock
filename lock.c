@@ -24,7 +24,7 @@ char *gkey;
 
 int execute(){
     printf("Hello World!\n");
-    int status = system(APP);
+    int status = system("sudo ~/starthabridge.sh");
     printf("Execution Status:%d\n",status);
 	return 0;
 }
