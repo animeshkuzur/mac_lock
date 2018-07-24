@@ -136,7 +136,7 @@ int getMacAddrs(){
                         break;
                     }
                     else{
-                        printf("Invalid Key");
+                        printf("Invalid Key\n");
                     }
                 }
             }
@@ -177,4 +177,5 @@ void init(){
 int main(){
     init();
 	getMacAddrs();
+    return 0;
 }
