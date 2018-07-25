@@ -11,7 +11,7 @@
 #include "freader.h"
 
 char KEY_FILE_NAME[] = "/HA_Bridge.key";
-#define APP "sudo ~/starthabridge.sh"
+#define APP "sudo systemctl start habridge.service"
 
 void init();
 void convertToString(unsigned char *);
@@ -24,7 +24,7 @@ char *gkey;
 
 int execute(){
     printf("Hello World!\n");
-    int status = system("sudo ~/starthabridge.sh");
+    int status = system(APP);
     printf("Execution Status:%d\n",status);
 	return 0;
 }
