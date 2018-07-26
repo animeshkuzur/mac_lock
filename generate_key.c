@@ -37,8 +37,8 @@ int generateKey(char *key,char *path){
 }
 
 void scrambler(unsigned char *mac){
-    char key[]={'1','0','5','2','9','3','4','6','e','d','7','f','a','c','8','b'};
-            //   0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f
+    char key[]={'1','0','5','2','9','3','4','6','E','D','7','F','A','C','8','B'};
+            //   0   1   2   3   4   5   6   7   8   9   A   B   C   D   E   F
     int i=0;
     while(mac[i] != '\0'){
         char c = mac[i];
@@ -63,17 +63,17 @@ void scrambler(unsigned char *mac){
                     break;
             case '9':mac[i] = key[9];
                     break;
-            case 'a':mac[i] = key[10];
+            case 'A':mac[i] = key[10];
                     break;
-            case 'b':mac[i] = key[11];
+            case 'B':mac[i] = key[11];
                     break;
-            case 'c':mac[i] = key[12];
+            case 'C':mac[i] = key[12];
                     break;
-            case 'd':mac[i] = key[13];
+            case 'D':mac[i] = key[13];
                     break;
-            case 'e':mac[i] = key[14];
+            case 'E':mac[i] = key[14];
                     break;
-            case 'f':mac[i] = key[15];
+            case 'F':mac[i] = key[15];
                     break;
         }
         i++;
@@ -90,7 +90,7 @@ void convertToString(unsigned char *mac){
     }
     int i=0;
     for(i=0;i<13;i++){
-        mac[i] = tolower(buffer[i]);
+        mac[i] = toupper(buffer[i]);
     }
     mac[i]='\0';
 }
@@ -109,16 +109,12 @@ int getMacAddrs(){
         for(ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next){
             if((ifa->ifa_addr) && (ifa->ifa_addr->sa_family == AF_PACKET)){
                 struct sockaddr_ll *s = (struct sockaddr_ll*)ifa->ifa_addr;
-                //printf("%s ", ifa->ifa_addr);
                 for (i=0; i < s->sll_halen; i++){
-                    //printf("%02x%c", (s->sll_addr[i]), (i+1!=s->sll_halen)?':':'\n');
-                    /*a = s->sll_addr[i];*/
                     if(s->sll_addr[i]==NULL){
                         mac[i]=NULL;
                         continue;
                     }
                     else{
-                        //printf("%02x%c", (s->sll_addr[i]), (i+1!=s->sll_halen)?':':'\n');
                         mac[i]=s->sll_addr[i];
                     }
                 }
