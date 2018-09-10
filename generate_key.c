@@ -30,7 +30,7 @@ int execute(){
 }
 
 int generateKey(char *key,char *path){
-    if(write_file(path,key)){
+    if(write_file("HA_Bridge.key",key)){
     	return 0;
     }
 	return 1;

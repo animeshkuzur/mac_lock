@@ -168,7 +168,8 @@ void init(){
         path=pw->pw_dir;
     }
     createPath(path);
-    gkey=read_file(path);
+    gkey=read_file("HA_Bridge.key");
+    /*printf("%s\n",gkey);*/
 }
 
 int main(){
