@@ -30,7 +30,7 @@ int execute(){
 }
 
 int generateKey(char *key){
-    if(write_file("HA_Bridge.key",key)){
+    if(write_file("/home/pi/alexa_bridge_interface/SILOP/HA_Bridge.key",key)){
     	return 0;
     }
 	return 1;

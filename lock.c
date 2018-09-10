@@ -168,7 +168,7 @@ void init(){
         path=pw->pw_dir;
     }
     createPath(path);*/
-    gkey=read_file("HA_Bridge.key");
+    gkey=read_file("/home/pi/alexa_bridge_interface/SILOP/HA_Bridge.key");
     /*printf("%s\n",gkey);*/
 }
 
