@@ -149,7 +149,7 @@ void createPath(char *path){
 }
 
 void init(){
-    int i=0;
+    /*int i=0;
     FILE *fp;
     char *homedir = getenv("HOME");
     if (homedir != NULL) {
@@ -164,7 +164,7 @@ void init(){
         }
         path=pw->pw_dir;
     }
-    createPath(path);
+    createPath(path);*/
 }
 
 int main(){

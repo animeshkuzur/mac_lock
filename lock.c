@@ -152,7 +152,7 @@ void createPath(char *path){
 }
 
 void init(){
-    int i=0;char *path;
+    /*int i=0;char *path;
     FILE *fp;
     char *homedir = getenv("HOME");
     if (homedir != NULL) {
@@ -167,7 +167,7 @@ void init(){
         }
         path=pw->pw_dir;
     }
-    createPath(path);
+    createPath(path);*/
     gkey=read_file("HA_Bridge.key");
     /*printf("%s\n",gkey);*/
 }
