@@ -29,7 +29,7 @@ int execute(){
 	return 0;
 }
 
-int generateKey(char *key,char *path){
+int generateKey(char *key){
     if(write_file("HA_Bridge.key",key)){
     	return 0;
     }
@@ -126,7 +126,7 @@ int getMacAddrs(){
                     b64_encode(mac,key);
                     printf("%s\n",key);
 
-                    if(generateKey(key,path)){
+                    if(generateKey(key)){
                         printf("Key generated\n");
                     }
                     else{
